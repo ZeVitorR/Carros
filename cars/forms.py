@@ -17,3 +17,5 @@ class CarModelForm(forms.ModelForm):
         if factory_year < 1975:
             self.add_error('factory_year','Não é possivel cadastrar carros fabricados antes de 1975')
         return factory_year
+    
+    
