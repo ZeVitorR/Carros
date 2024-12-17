@@ -2,36 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Car
 from .forms import CarModelForm
 from django.views import View
-from django.views.generic import ListView
-
-def cars_view(request):
-    search = request.GET.get('search')
-
-    if (search):
-        cars = Car.objects.filter(model__icontains=search)
-    else:
-        cars = Car.objects.all()
-
-    cars = cars.order_by('model')
-
-    return render(
-        request,
-        'cars.html',
-        {'cars': cars})
-
-class CarsView(View):
-
-    def get(self, request):
-        search = request.GET.get('search')
-        if (search):
-            cars = Car.objects.filter(model__icontains=search)
-        else:
-            cars = Car.objects.all()
-        cars = cars.order_by('model')
-        return render(
-            request,
-            'cars.html',
-            {'cars': cars})
+from django.views.generic import ListView, CreateView
 
 class CarsListView(ListView):
     model = Car
@@ -79,3 +50,9 @@ class NewCarView(View):
             'new_car.html',
             {'new_car_form': new_car_form}
         )
+
+class NewCarCreateView(CreateView):
+    model = Car
+    form_class = CarModelForm
+    template_name = 'new_car.html'
+    success_url = '/cars/'
