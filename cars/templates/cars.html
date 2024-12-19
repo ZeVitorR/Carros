@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
   <style>
     .car-grid {
@@ -90,12 +91,15 @@
     button[type="submit"]:hover {
         background-color: #108eb8;
     }
-    a{
+
+    a {
+      font-size: 18px;
+      color: #333;
       text-decoration: none;
-      color: black;
     }
-    a:hover{
-      color: #0096c7
+
+    a:hover {
+      color: #0096c7;
     }
   </style>
 
@@ -109,7 +113,11 @@
       {% for car in cars %}
         <a href="{% url 'car_detail' car.pk %}">
           <div class="car-card">
-            <img src="{{ car.photo.url }}" alt="{{ car.model }} - {{ car.brand }}">
+            {% if car.photo %}
+              <img src="{{ car.photo.url }}" alt="{{ car.model }} - {{ car.brand }}">
+            {% else %}
+              <p class="no-photo">Foto não disponível</p>
+            {% endif %}
             <h2>{{ car.brand }} {{ car.model }}</h2>
             <p>{{ car.factory_year }} - R$ {{ car.value }}</p>
           </div>
